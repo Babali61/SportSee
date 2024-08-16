@@ -10,11 +10,20 @@ html {
   -moz-text-size-adjust: none;
   -webkit-text-size-adjust: none;
   text-size-adjust: none;
+  height: 100%;
 }
 
 /* Remove default margin in favour of better control in authored CSS */
-body, h1, h2, h3, h4, p,
-figure, blockquote, dl, dd {
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
   margin-block-end: 0;
 }
 
@@ -28,17 +37,27 @@ ol[role='list'] {
 body {
   min-height: 100vh;
   line-height: 1.5;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Set shorter line heights on headings and interactive elements */
-h1, h2, h3, h4,
-button, input, label {
+h1,
+h2,
+h3,
+h4,
+button,
+input,
+label {
   line-height: 1.1;
 }
 
 /* Balance text wrapping on headings */
-h1, h2,
-h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   text-wrap: balance;
 }
 
@@ -56,8 +75,10 @@ picture {
 }
 
 /* Inherit fonts for inputs and buttons */
-input, button,
-textarea, select {
+input,
+button,
+textarea,
+select {
   font-family: inherit;
   font-size: inherit;
 }
@@ -70,13 +91,16 @@ textarea:not([rows]) {
 /* Anything that has been anchored to should have extra scroll margin */
 :target {
   scroll-margin-block: 5ex;
-}body {
+}
+
+body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  height: 100%;
 }
 
 code {
@@ -85,13 +109,15 @@ code {
 }
 
 .main {
-  display: flex
+  display: flex;
+  min-height: 90vh;
 }
+
 .chart-container {
   width: 100%;
-  max-width: 60%;
+  max-width: 80%;
   height: auto;
- 
+
   padding: 10px;
   background-color: #f0f0f0;
   border: 1px solid #ddd;
@@ -107,21 +133,88 @@ code {
   background-color: #000000;
   color: white;
   text-align: center;
-  height: 9rem;
-  
+  height: 10vh;
+display: flex;
 }
 
+.header-horizontal .logo {
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+}
+
+.nav-horizontal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.nav-horizontal ul {
+  display: flex;
+  list-style: none;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.nav-horizontal ul a {
+  text-decoration: none;
+  font-size: 1.2em;
+}
 .nav-vertical {
   background-color: #000000;
   color: white;
-  width: 9rem;
+  width: 8.5vw; /* Ajustez la largeur selon le besoin */
+  height: 90vh; /* Prend toute la hauteur de la fenêtre */
+  display: flex;
+  flex-direction: column;
   flex-shrink: 0;
+  align-items: center;
+  justify-content:end;
 }
+
+.nav-icons {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  top: 40%;
+  z-index: 1;
+}
+
+.nav-icons li {
+  margin-bottom: 10px;
+  width: 50px;
+  height: 50px;
+  background-color: #ddd;
+  border-radius: 10px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;/* Espace entre les icônes */
+}
+
+.nav-icons li img {
+  width: 30px; /* Taille des icônes */
+  height: 30px;
+}
+
+.copyright {
+  writing-mode: vertical-rl; /* Texte vertical */
+  transform: rotate(180deg); /* Pour retourner le texte afin qu'il soit lisible de bas en haut */
+  font-size: 12px;
+  margin-bottom: 35px;
+  z-index: 2;
+}
+
+.copyright p {
+  margin-bottom: -5px;
+}
+
 
 .content {
   background-color: #FFFFFF;
   flex: 1;
-  padding: 2rem 7rem;
+  padding: 3rem 5rem;
   width: 91rem;
   max-width: 100%;
 }
@@ -144,35 +237,163 @@ code {
 .content-graph-three {
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 100%;
-  margin-top: 2%;
-  
+  justify-content: left;
+  width: 55vw;
+  margin-top: 3%;
+  margin-bottom: 3%;
+
 }
 
 .content-graph {
   width: 100%;
   height: 100%;
-  margin-right: 2%;
+
 }
+
+.content-graph:nth-child(1),
+.content-graph:nth-child(2) {
+  margin-right: 2%;
+  /* Ajustez la valeur selon vos besoins */
+}
+
 
 .piechart {
   width: 25%;
   height: 100%;
 }
 
-.custom-cursor{
-  height: 100%;
+.custom-cursor {
+  visibility: hidden;
 }
+
+.tooltip {
+  position: absolute;
+  text-align: center;
+  padding: 6px;
+  font: 12px sans-serif;
+  background: lightsteelblue;
+  border: 0px;
+  border-radius: 8px;
+  pointer-events: none;
+}
+
+.x-axis {
+  display: no
+}
+
+.content-graph-activity {
+  background-color: #fbfbfb;
+  width: 55vw;
+}
+
+.nutrition-content {
+  display: flex;
+ 
+
+}
+
+.nutrition-cards {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 95%;
+}
+
+.nutrition-card {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  width: 18vw;
+  height: 15vh;
+  border-radius: 8px;
+  background-color: #FBFBFB;
+}
+
+
+
+
+.icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16px;
+}
+
+.value {
+  font-size: 1.3em;
+  font-weight: bold;
+}
+
+.label {
+  font-size: 0.9em;
+  font-weight: 400;
+  color: #74798C;
+}
+
+.graphs {
+  width: 55vw;
+  margin-right: 3vw;
+}
+
+.graphsAndNutrition {
+  display: flex;
+  width: 100%;
+  margin-top: 60px;
+}
+
 @media screen and (max-width:1200px) {
 
-.content {
-  padding: 3% 5%;
-}
+  .content {
+    padding: 2% 0% 0% 8vw;
+  }
+
+
+  .content-graph {
+    max-width: 200px;
+    height: 100%;
+
+  }
+
+  .content-graph:nth-child(1),
+  .content-graph:nth-child(2) {
+    margin-right: 25px;
+  }
+  .nutrition-card {
+    
+    width: 18vw;
+    height: 11vh;
+    border-radius: 8px;
   
-.content-graph {
-  max-width: 200px;
-  height: 100%;
-  margin-right: 2%;
+  }
+ 
 }
+
+@media screen and (min-width:1201px) {
+
+  .content {
+    padding: 3rem 0 0 5rem;
+  }
+
+  .nutrition-card {
+    
+    width: 18vw;
+    height: 11vh;
+    border-radius: 8px;
+  
+  }
+
+  .graphs {
+    width: 61vw;
+  }
+
+  .content-graph-activity {
+    width: 60vw;
+  }
+
+  .content-graph-three {
+    width: 60vw;
+  }
+ 
 }
