@@ -4,6 +4,14 @@ import swimIcon from '../icons/swim-icon.svg';
 import bikeIcon from '../icons/bike-icon.svg';
 import strengthIcon from '../icons/strength-icon.svg';
 
+/**
+ * Composant pour la navigation verticale de l'application.
+ * 
+ * Affiche une liste d'icônes de navigation verticale et un message de copyright.
+ * 
+ * @returns {JSX.Element} La navigation verticale avec les icônes et le copyright.
+ */
+
 const NavVerticale = () => {
   return (
     <nav className="nav-vertical">

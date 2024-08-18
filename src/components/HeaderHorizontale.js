@@ -1,6 +1,14 @@
 import React from "react";
 import logo from "../icons/logo.svg";
 
+/**
+ * Composant pour l'en-tête horizontal de l'application.
+ * 
+ * Affiche le logo de l'application et un menu de navigation horizontal.
+ * 
+ * @returns {JSX.Element} L'en-tête horizontal avec le logo et la navigation.
+ */
+
 const HeaderHorizontal = () => {
   return (
     <header className="header-horizontal">

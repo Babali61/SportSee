@@ -1,3 +1,5 @@
+
+
 const API_URL = 'http://localhost:3001';
 
 const checkResponse = async (response) => {
@@ -14,6 +16,13 @@ const checkResponse = async (response) => {
   }
 };
 
+/**
+ * Récupère les données de l'utilisateur par son ID.
+ *
+ * @param {number} id - L'ID de l'utilisateur.
+ * @returns {Promise<Object>} Les données de l'utilisateur.
+ */
+
 export const fetchUserData = async (id) => {
   console.log(`Fetching user data for ID: ${id}`);
   try {
@@ -28,6 +37,14 @@ export const fetchUserData = async (id) => {
     throw error;
   }
 };
+
+
+/**
+ * Récupère les données d'activité quotidienne de l'utilisateur.
+ *
+ * @param {number} userId - L'ID de l'utilisateur.
+ * @returns {Promise<Object>} Les données d'activité.
+ */
 
 export const fetchUserActivity = async (userId) => {
   console.log(`Fetching user activity for user ID: ${userId}`);
@@ -44,6 +61,13 @@ export const fetchUserActivity = async (userId) => {
   }
 };
 
+/**
+ * Récupère les sessions moyennes de l'utilisateur par jour.
+ *
+ * @param {number} userId - L'ID de l'utilisateur.
+ * @returns {Promise<Object>} Les données des sessions moyennes.
+ */
+
 export const fetchUserAverageSessions = async (userId) => {
   console.log(`Fetching user average sessions for user ID: ${userId}`);
   try {
@@ -58,6 +82,13 @@ export const fetchUserAverageSessions = async (userId) => {
     throw error;
   }
 };
+
+/**
+ * Récupère les performances de l'utilisateur.
+ *
+ * @param {number} userId - L'ID de l'utilisateur.
+ * @returns {Promise<Object>} Les données de performance.
+ */
 
 export const fetchUserPerformance = async (userId) => {
   console.log(`Fetching user performance for user ID: ${userId}`);

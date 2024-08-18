@@ -7,6 +7,16 @@ import { ReactComponent as CarbIcon } from "../icons/carb.svg";
 import { ReactComponent as FatIcon } from "../icons/fat.svg";
 import { fetchUserData } from "../services/api";
 
+/**
+ * Composant pour afficher les cartes de nutrition d'un utilisateur.
+ * 
+ * Ce composant affiche une série de cartes représentant les données nutritionnelles de l'utilisateur (calories, protéines, glucides, lipides).
+ * 
+ * @param {Object} props - Les propriétés du composant.
+ * @param {number} props.id - L'ID de l'utilisateur pour lequel afficher les données nutritionnelles.
+ * @returns {JSX.Element} Un ensemble de cartes de nutrition.
+ */
+
 const NutritionCard = ({ id }) => {
   console.log("NutritionCard received id:", id);
   const [userData, setUserData] = useState(null);

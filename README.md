@@ -68,3 +68,63 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+<!-- Français -->
+
+Prise en main avec Create React App
+Ce projet a été initialisé avec Create React App.
+
+Scripts disponibles
+Dans le répertoire du projet, vous pouvez exécuter :
+
+npm start
+Lance l'application en mode développement.
+Ouvrez http://localhost:3000 pour l'afficher dans votre navigateur.
+
+La page se rechargera lorsque vous apporterez des modifications.
+Vous pouvez également voir les erreurs de lint dans la console.
+
+npm test
+Lance le testeur en mode interactif.
+Consultez la section sur l'exécution des tests pour plus d'informations.
+
+npm run build
+Construit l'application pour la production dans le dossier build.
+Il regroupe correctement React en mode production et optimise la construction pour obtenir les meilleures performances.
+
+La construction est minifiée et les noms de fichiers incluent des hash.
+Votre application est prête à être déployée !
+
+Consultez la section sur le déploiement pour plus d'informations.
+
+npm run eject
+Remarque : c'est une opération irréversible. Une fois que vous avez eject, vous ne pouvez plus revenir en arrière !
+
+Si vous n'êtes pas satisfait des choix de l'outil de construction et de la configuration, vous pouvez eject à tout moment. Cette commande supprimera la dépendance unique du projet.
+
+Au lieu de cela, elle copiera tous les fichiers de configuration et les dépendances transitoires (webpack, Babel, ESLint, etc.) directement dans votre projet afin que vous ayez un contrôle total sur ceux-ci. Toutes les commandes, à l'exception de eject, continueront de fonctionner, mais elles pointeront vers les scripts copiés afin que vous puissiez les modifier. À partir de ce moment-là, vous serez seul responsable de la maintenance de ces fichiers.
+
+Vous n'avez jamais besoin d'utiliser eject. Le jeu de fonctionnalités organisé est adapté aux déploiements de petite et moyenne envergure, et vous ne devriez pas vous sentir obligé d'utiliser cette fonctionnalité. Cependant, nous comprenons que cet outil ne serait pas utile si vous ne pouviez pas le personnaliser lorsque vous êtes prêt.
+
+En savoir plus
+Vous pouvez en savoir plus dans la documentation de Create React App.
+
+Pour apprendre React, consultez la documentation de React.
+
+Fractionnement du code
+Cette section a été déplacée ici : https://facebook.github.io/create-react-app/docs/code-splitting
+
+Analyse de la taille du bundle
+Cette section a été déplacée ici : https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+
+Créer une Progressive Web App
+Cette section a été déplacée ici : https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+
+Configuration avancée
+Cette section a été déplacée ici : https://facebook.github.io/create-react-app/docs/advanced-configuration
+
+Déploiement
+Cette section a été déplacée ici : https://facebook.github.io/create-react-app/docs/deployment
+
+npm run build échoue à minifier
+Cette section a été déplacée ici : https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify

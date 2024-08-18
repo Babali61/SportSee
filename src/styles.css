@@ -164,8 +164,7 @@ display: flex;
 .nav-vertical {
   background-color: #000000;
   color: white;
-  width: 8.5vw; /* Ajustez la largeur selon le besoin */
-  height: 90vh; /* Prend toute la hauteur de la fenêtre */
+  width: 8.5vw;
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
