@@ -5,7 +5,7 @@ import { ReactComponent as FireIcon } from "../icons/fire.svg";
 import { ReactComponent as ProteinIcon } from "../icons/protein.svg";
 import { ReactComponent as CarbIcon } from "../icons/carb.svg";
 import { ReactComponent as FatIcon } from "../icons/fat.svg";
-import { fetchUserData } from "../services/api";
+import apiService from "../services/api";
 
 /**
  * Composant pour afficher les cartes de nutrition d'un utilisateur.
@@ -27,9 +27,9 @@ const NutritionCard = ({ id }) => {
     console.log(`Fetching data for user ID: ${id}`);
     const getUserData = async () => {
       try {
-        const data = await fetchUserData(id);
+        const data = await apiService.getUserData(id);
         console.log("Fetched User Data:", data);
-        setUserData(data);
+        setUserData({ data: data });
       } catch (error) {
         console.error(
           "Erreur lors de la récupération des données utilisateur :",

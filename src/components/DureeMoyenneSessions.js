@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
-import { fetchUserAverageSessions } from "../services/api";
+import apiService from "../services/api";
 
 /**
  * Composant graphique pour afficher la durée moyenne des sessions d'un utilisateur.
@@ -28,11 +28,9 @@ const DureeMoyenneSessions = ({ userId }) => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const sessionsResponse = await fetchUserAverageSessions(userId);
-        const sessionsData = sessionsResponse.data;
-
-        if (sessionsData && Array.isArray(sessionsData.sessions)) {
-          setData(sessionsData.sessions);
+        const sessionsData = await apiService.getUserAverageSessions(userId);
+        if (sessionsData && Array.isArray(sessionsData)) {
+          setData(sessionsData);
         } else {
           throw new Error("Data format is incorrect");
         }

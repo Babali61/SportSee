@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
-import { fetchUserPerformance } from '../services/api'; // Assurez-vous que le chemin est correct
+import apiService from '../services/api';
 
 /**
  * Composant graphique pour afficher les performances d'un utilisateur sous forme de radar.
@@ -28,10 +28,7 @@ const GraphiqueRadarPerformance = ({ userId }) => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const performanceResponse = await fetchUserPerformance(userId);
-        console.log('Fetched Data:', performanceResponse);
-
-        const performanceData = performanceResponse.data; // Accéder à l'objet imbriqué
+        const performanceData = await apiService.getUserPerformance(userId);
         console.log('Performance Data:', performanceData);
 
         if (performanceData && Array.isArray(performanceData.data) && performanceData.kind) {

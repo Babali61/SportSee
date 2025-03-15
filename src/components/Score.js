@@ -23,11 +23,11 @@ const GaugeChart = ({ score }) => {
     const width = 100;
     const height = 100;
 
-    /** Angle de départ de la jauge (ajusté en fonction du score) */
-    const startAngle = score;
+    /** Angle de départ de la jauge (doit être 0) */
+    const startAngle = -Math.PI / 2;
 
     /** Angle de fin de la jauge (correspondant à 180 degrés) */
-    const endAngle = Math.PI;
+    const endAngle = Math.PI * 2;
 
     /** Rayon extérieur de la jauge */
     const outerRadius = Math.min(width, height) / 2.7;
@@ -57,7 +57,7 @@ const GaugeChart = ({ score }) => {
 
     /** Ajout de l'arc représentant le score de l'utilisateur (en rouge) */
     svg.append('path')
-      .datum({ value: score / 100 }) // Remplissage partiel en fonction du score
+      .datum({ value: score / 100 }) // Cette valeur est correcte
       .attr('d', arc)
       .attr('fill', '#ff0000');
 
