@@ -1,0 +1,224 @@
+DOCUMENTATION TECHNIQUE - PROJET SPORTSEE
+=========================================
+
+1. INTRODUCTION
+--------------
+Le projet SportSee est une application de suivi d'activité sportive développée avec React et D3.js. 
+Cette documentation présente les choix techniques et l'architecture frontend du projet.
+
+2. ARCHITECTURE GLOBALE
+----------------------
+Structure du projet :
+src/
+├── components/         # Composants React
+├── hooks/             # Hooks personnalisés
+├── mocks/             # Données de test
+├── models/            # Classes de modélisation
+└── services/          # Services API
+
+Technologies utilisées :
+- Framework : React
+- Visualisation : D3.js
+- Gestion d'État : React Hooks
+- Validation : PropTypes
+- API : Service personnalisé avec fallback
+
+3. COMPOSANTS PRINCIPAUX
+-----------------------
+3.1 MainContent
+- Composant principal orchestrant l'application
+- Gestion de l'état utilisateur (nom, score)
+- Organisation du dashboard
+- Intégration des différents graphiques
+
+3.2 Visualisations de Données
+a) Graphique d'Activité Quotidienne
+   - Type : Graphique à barres groupées
+   - Données : Poids et calories par jour
+   - Fonctionnalités :
+     * Tooltips interactifs
+     * Grille de fond
+     * Animations fluides
+     * Design responsive
+
+b) Graphique Radar
+   - Type : Graphique radar
+   - Données : Performances par catégorie
+   - Fonctionnalités :
+     * Axes dynamiques
+     * Niveaux de performance
+     * Visualisation intuitive
+   - Implémentation technique :
+     * Utilisation de D3.js pour le rendu
+     * Calculs trigonométriques pour les axes
+     * Polygones de fond pour les niveaux
+     * Couleur rouge (#ff0101) pour les performances
+     * Fond sombre (#282D30) pour le contraste
+   - Catégories de performance :
+     * Cardio
+     * Énergie
+     * Endurance
+     * Force
+     * Vitesse
+     * Intensité
+
+c) Durée Moyenne des Sessions
+   - Type : Graphique linéaire
+   - Données : Durée des sessions par jour
+   - Fonctionnalités :
+     * Curseur personnalisé
+     * Tooltips interactifs
+     * Dégradé visuel
+
+d) Cartes Nutrition
+   - Type : Composant d'affichage de données nutritionnelles
+   - Données affichées :
+     * Calories (kCal)
+     * Protéines (g)
+     * Glucides (g)
+     * Lipides (g)
+   - Fonctionnalités :
+     * Icônes SVG personnalisées
+     * Code couleur par catégorie :
+       - Calories : #FFECEC
+       - Protéines : #ECF4FF
+       - Glucides : #FFF9EC
+       - Lipides : #FFECF1
+     * Affichage responsive
+     * Gestion des états de chargement
+   - Implémentation technique :
+     * Utilisation de PropTypes pour la validation
+     * Composant réutilisable (NutritionCardItem)
+     * Gestion des erreurs
+     * Intégration avec le service API
+
+e) Score (Jauge)
+   - Type : Graphique en jauge circulaire
+   - Données : Score de l'utilisateur en pourcentage
+   - Fonctionnalités :
+     * Affichage du pourcentage au centre
+     * Arc de progression dynamique
+     * Fond gris clair (#f8f8f8)
+     * Couleur de progression rouge (#ff0000)
+   - Implémentation technique :
+     * Utilisation de D3.js pour le rendu
+     * Arc semi-circulaire (180 degrés)
+     * Rayon intérieur et extérieur configurables
+     * Coins arrondis (cornerRadius: 10)
+   - Éléments visuels :
+     * Texte "Score" au-dessus
+     * Pourcentage au centre
+     * Texte explicatif "de votre objectif" en dessous
+     * Cercle central blanc pour effet de jauge
+   - Caractéristiques :
+     * Design épuré et minimaliste
+     * Animations fluides
+     * Responsive
+     * Contraste optimal pour la lisibilité
+
+4. GESTION DES DONNÉES
+---------------------
+4.1 Service API
+- Système de fallback intelligent
+- Timeout de 400ms
+- Gestion des erreurs robuste
+- Vérification de disponibilité de l'API
+- Implémentation technique :
+  * Utilisation de l'API Fetch native
+  * AbortController pour la gestion des timeouts
+  * Base URL configurable (http://localhost:3001)
+  * Endpoints disponibles :
+    - /user/:id
+    - /user/:id/activity
+    - /user/:id/average-sessions
+    - /user/:id/performance
+  * Méthodes principales :
+    - getUserData(userId)
+    - getUserActivity(userId)
+    - getUserAverageSessions(userId)
+    - getUserPerformance(userId)
+    - getUserFirstName(userId)
+    - getUserScore(userId)
+  * Système de cache pour la vérification de l'API (5 secondes)
+  * Gestion des erreurs avec try/catch
+  * Conversion des réponses en JSON
+  * Standardisation des données via le modèle UserData
+
+4.2 Modélisation
+- Classe UserData pour standardisation
+- Gestion des valeurs par défaut
+- Conversion des scores en pourcentage
+- Validation des données
+
+5. OPTIMISATIONS TECHNIQUES
+-------------------------
+5.1 Hook Personnalisé (useResizeObserver)
+- Observation des changements de dimensions
+- Optimisation avec requestAnimationFrame
+- Nettoyage automatique des observateurs
+- Gestion efficace des performances
+
+5.2 Performance
+- Utilisation de useCallback pour les callbacks
+- Optimisation des rendus avec useEffect
+- Gestion efficace des dimensions
+- Animations optimisées
+
+6. GESTION DES ERREURS
+---------------------
+6.1 Validation des Données
+- Vérification des données reçues
+- Messages d'erreur explicites
+- États de chargement
+- Fallback sur les mocks
+
+6.2 Système de Fallback
+- Vérification de disponibilité API
+- Timeout de 400ms
+- Utilisation des mocks en cas d'échec
+- Gestion des erreurs réseau
+
+7. INTERFACE UTILISATEUR
+-----------------------
+7.1 Navigation
+- Menu vertical avec icônes
+- En-tête horizontal
+- Navigation intuitive
+- Design responsive
+
+7.2 Cartes Nutrition
+- Affichage clair des données
+- Icônes explicites
+- Code couleur pour les catégories
+- Mise en page optimisée
+
+8. RECOMMANDATIONS
+-----------------
+8.1 Tests
+- Tests unitaires pour les composants
+- Tests d'intégration pour les services
+- Tests E2E pour les flux utilisateur
+- Couverture de code
+
+8.2 Performance
+- Code splitting
+- Lazy loading des graphiques
+- Optimisation des assets
+- Gestion du cache
+
+8.3 Accessibilité
+- Attributs ARIA
+- Navigation au clavier
+- Contraste des couleurs
+- Support des lecteurs d'écran
+
+9. CONCLUSION
+------------
+L'architecture frontend de SportSee démontre :
+- Une séparation claire des responsabilités
+- Une gestion efficace des données
+- Des visualisations interactives
+- Une expérience utilisateur optimisée
+- Une base solide pour l'évolution future
+
+Les choix techniques sont cohérents et suivent les meilleures pratiques actuelles du développement React et D3.js. 

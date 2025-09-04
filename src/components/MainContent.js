@@ -14,7 +14,7 @@ import apiService from "../services/api";
  */
 
 const MainContent = () => {
-  const userId = 12;
+  const userId = 18;
   const [userName, setUserName] = useState("");
   const [userScore, setUserScore] = useState(0);
   const [error, setError] = useState(null);

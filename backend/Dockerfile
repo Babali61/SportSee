@@ -1,8 +1,17 @@
 FROM node:lts-alpine
 
-ADD . /app/
 WORKDIR /app
 
-RUN yarn
+# Copier les fichiers de dépendances
+COPY package.json yarn.lock ./
 
-EXPOSE 3000
+# Installer les dépendances
+RUN yarn install --production
+
+# Copier le code source
+COPY . .
+
+EXPOSE 3001
+
+# Démarrer l'application
+CMD ["npm", "start"]

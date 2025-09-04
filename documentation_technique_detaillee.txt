@@ -1,0 +1,288 @@
+DOCUMENTATION TECHNIQUE DÉTAILLÉE - PROJET SPORTSEE
+=================================================
+
+1. INTRODUCTION
+--------------
+Le projet SportSee est une application de suivi d'activité sportive développée avec React et D3.js. 
+Cette documentation détaillée explique le développement technique de chaque composant et fonctionnalité.
+
+2. ARCHITECTURE GLOBALE
+----------------------
+2.1 Structure du Projet
+- Organisation modulaire :
+  * components/ : Composants React réutilisables
+  * hooks/ : Hooks personnalisés pour la logique réutilisable
+  * mocks/ : Données de test pour le développement
+  * models/ : Classes de modélisation des données
+  * services/ : Services pour la gestion des appels API
+
+2.2 Technologies Utilisées
+- React : Framework principal
+  * Hooks pour la gestion d'état et les effets secondaires
+  * Composants fonctionnels
+  * Props pour la communication entre composants
+- D3.js : Bibliothèque de visualisation
+  * Manipulation du DOM
+  * Création de graphiques interactifs
+  * Gestion des animations
+- PropTypes : Validation des props
+  * Type checking
+  * Documentation implicite
+- API Fetch : Communication avec le backend
+  * Appels HTTP
+  * Gestion des réponses
+  * Gestion des erreurs
+
+3. DÉVELOPPEMENT DES COMPOSANTS
+-----------------------------
+3.1 MainContent
+- Développement :
+  * Utilisation de useState pour l'état local
+  * useEffect pour les appels API
+  * Gestion des erreurs avec try/catch
+  * Structure JSX modulaire
+- Code clé :
+```javascript
+const MainContent = () => {
+  const [userName, setUserName] = useState("");
+  const [userScore, setUserScore] = useState(0);
+  
+  useEffect(() => {
+    apiService.getUserFirstName(userId)
+      .then(firstName => setUserName(firstName));
+    apiService.getUserScore(userId)
+      .then(score => setUserScore(score));
+  }, [userId]);
+  
+  return (
+    <div className="content">
+      {/* Structure du dashboard */}
+    </div>
+  );
+};
+```
+
+3.2 Visualisations de Données
+
+a) Graphique d'Activité Quotidienne
+- Développement :
+  * Utilisation de D3.js pour le rendu
+  * Échelles dynamiques pour les axes
+  * Animations avec transitions
+  * Tooltips interactifs
+- Code clé :
+```javascript
+// Configuration des échelles
+const x = d3.scaleBand()
+  .domain(data.map((d) => d.day))
+  .range([0, width])
+  .padding(0.8);
+
+const y = d3.scaleLinear()
+  .domain([0, d3.max(data, d => d.value)])
+  .range([height, 0]);
+
+// Création des barres
+svg.selectAll(".bar")
+  .data(data)
+  .enter()
+  .append("rect")
+  .attr("class", "bar")
+  .attr("x", d => x(d.day))
+  .attr("y", d => y(d.value))
+  .attr("width", x.bandwidth())
+  .attr("height", d => height - y(d.value));
+```
+
+b) Graphique Radar
+- Développement :
+  * Calculs trigonométriques pour les axes
+  * Polygones de fond pour les niveaux
+  * Animations fluides
+- Code clé :
+```javascript
+// Calcul des angles
+const angleSlice = (Math.PI * 2) / data.length;
+
+// Création des axes
+const radarLine = d3.line()
+  .x((d, i) => radius * (d.value / 250) * Math.cos(angleSlice * i - Math.PI / 2))
+  .y((d, i) => radius * (d.value / 250) * Math.sin(angleSlice * i - Math.PI / 2))
+  .curve(d3.curveLinearClosed);
+```
+
+c) Score (Jauge)
+- Développement :
+  * Arc semi-circulaire avec D3.js
+  * Animations de progression
+  * Texte centré dynamique
+- Code clé :
+```javascript
+const arc = d3.arc()
+  .innerRadius(innerRadius)
+  .outerRadius(outerRadius)
+  .startAngle(startAngle)
+  .endAngle(d => startAngle + (endAngle - startAngle) * d.value);
+```
+
+4. GESTION DES DONNÉES
+---------------------
+4.1 Service API
+- Développement :
+  * Classe ApiService pour centraliser les appels
+  * Système de fallback avec mocks
+  * Gestion des timeouts
+- Code clé :
+```javascript
+class ApiService {
+  async checkApiAvailability(userId) {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 400);
+    
+    try {
+      const response = await fetch(`${BASE_URL}/user/${userId}`, {
+        signal: controller.signal
+      });
+      return response.ok;
+    } catch (error) {
+      return false;
+    }
+  }
+}
+```
+
+4.2 Modélisation
+- Développement :
+  * Classe UserData pour standardisation
+  * Conversion des données
+  * Validation des valeurs
+- Code clé :
+```javascript
+class UserData {
+  constructor(data) {
+    this.id = data.id;
+    this.userInfos = data.userInfos;
+    const rawScore = data.score || data.todayScore || 0;
+    this.score = rawScore * 100;
+    this.keyData = data.keyData;
+  }
+}
+```
+
+5. OPTIMISATIONS TECHNIQUES
+-------------------------
+5.1 Hook useResizeObserver
+- Développement :
+  * Utilisation de ResizeObserver API
+  * Optimisation avec requestAnimationFrame
+  * Nettoyage automatique
+- Code clé :
+```javascript
+const useResizeObserver = (ref) => {
+  const [dimensions, setDimensions] = useState(null);
+  
+  const resizeCallback = useCallback((entries) => {
+    requestAnimationFrame(() => {
+      setDimensions(entries[0].contentRect);
+    });
+  }, []);
+  
+  useEffect(() => {
+    const resizeObserver = new ResizeObserver(resizeCallback);
+    resizeObserver.observe(ref.current);
+    return () => resizeObserver.disconnect();
+  }, [ref, resizeCallback]);
+  
+  return dimensions;
+};
+```
+
+6. GESTION DES ERREURS
+---------------------
+- Développement :
+  * Try/catch pour les appels API
+  * Messages d'erreur explicites
+  * États de chargement
+  * Fallback sur les mocks
+- Code clé :
+```javascript
+try {
+  const data = await apiService.getUserData(id);
+  setUserData({ data: data });
+} catch (error) {
+  setError(error.message);
+} finally {
+  setIsLoading(false);
+}
+```
+
+7. INTERFACE UTILISATEUR
+-----------------------
+7.1 Navigation
+- Développement :
+  * Composants de navigation réutilisables
+  * Gestion des états actifs
+  * Transitions fluides
+- Code clé :
+```javascript
+const NavVerticale = () => {
+  return (
+    <nav className="nav-vertical">
+      <ul className="nav-icons">
+        {/* Icônes de navigation */}
+      </ul>
+    </nav>
+  );
+};
+```
+
+7.2 Cartes Nutrition
+- Développement :
+  * Composants réutilisables
+  * Props validation
+  * Styles conditionnels
+- Code clé :
+```javascript
+const NutritionCardItem = ({ icon, value, label, bgColor }) => {
+  return (
+    <div className="nutrition-card">
+      <div className="icon" style={{backgroundColor: bgColor}}>
+        {icon}
+      </div>
+      <div className="wrapValueAndText">
+        <div className="value">{value}</div>
+        <div className="label">{label}</div>
+      </div>
+    </div>
+  );
+};
+```
+
+8. RECOMMANDATIONS DE DÉVELOPPEMENT
+---------------------------------
+8.1 Tests
+- Tests unitaires avec Jest
+- Tests d'intégration avec React Testing Library
+- Tests E2E avec Cypress
+- Couverture de code avec Istanbul
+
+8.2 Performance
+- Code splitting avec React.lazy
+- Lazy loading des graphiques
+- Optimisation des assets
+- Gestion du cache
+
+8.3 Accessibilité
+- Attributs ARIA
+- Navigation au clavier
+- Contraste des couleurs
+- Support des lecteurs d'écran
+
+9. CONCLUSION
+------------
+Le développement de SportSee suit les meilleures pratiques :
+- Architecture modulaire et maintenable
+- Code propre et documenté
+- Performance optimisée
+- Expérience utilisateur fluide
+- Base solide pour l'évolution future 
